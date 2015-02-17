@@ -1,0 +1,68 @@
+<html>
+<body>
+ <div id=wikicontent style="padding:0 3em 1.2em 0">
+ <p>A set of reflection utilities and miscellaneous utilities related to working with classes and their fields with no dependencies which is compatible with java 1.5 and generics. </p><h2><a name="Features:"/>Features:</h2><p>These are built to be compatible with <a href="http://commons.apache.org/beanutils/" rel="nofollow">Apache Commons BeanUtils</a> and the nesting structure works the same, refer to the apache BeanUtils project docs for details. Support for Apache DynaClass / DynaBean is included. Current users of beanutils should be able to drop in these utilities and gain the functionality with minimal code changes. </p><p>Handles field operations for properties (getters and setters), partial properties (only getter or only setter), and fields. This is configurable to use the fields only, properties only, or the hybrid approach (default). This improves upon the BeanUtils limitation of handling only properties or the Google utilities limitation of handling only fields. </p><p>Getting and setting fields supports simple, nested, indexed, and mapped values <ul><li><strong>Simple:</strong> Get/set a field in a bean (or map), Example: &quot;title&quot;, &quot;id&quot; </li><li><strong>Nested:</strong> Get/set a field in a bean which is contained in another bean, Example: &quot;someBean.title&quot;, &quot;someBean.id&quot; </li><li><strong>Indexed:</strong> Get/set a list/array item by index in a bean, Example: &quot;myList1&quot;, &quot;anArray2&quot; </li><li><strong>Mapped:</strong> Get/set a map entry by key in a bean, Example: &quot;myMap(key)&quot;, &quot;someMap(thing)&quot; </li></ul></p><p>Includes support for dealing with annotations and working with fields which have annotations on them. Methods for finding fields with an annotation and finding all annotations in a class or on a fields are included. </p><p>Includes support for deep cloning, deep copying, and populating objects using auto-conversion. Also includes support for fuzzy copies where object data can be copied from one object to another without the objects being the same type. </p><p>Also includes an extendable conversion system for converting between java types. This system also handles conversions between arrays, maps, collections, enums, and scalars and improves upon the apache system by handling more types and handling object holders.   Support for construction of any class and a set of utilities for determining what types of objects you are working with are also included. A method for executing a specific constructor can be used if more control if needed. </p><p>Includes transcoders (encoder/decoder) for conversion of class data to and from JSON and XML. The transcoders are clean and simple and work with any type of object. They will default to converting the incoming data into maps of simple java objects but these can be converted to the correct objects using the reflection utilities if desired. </p><p>The utilities cache reflection data for high performance operation but uses weak/soft caching to avoid holding open ClassLoaders and causing the caches to exist in memory permanently. The ability to override the caching mechanism with your own is supported. </p><p>The utilities are modular and are meant to be extendable and overridable. All methods are protected or public so that the various utility classes can be easily overridden if needed. </p><hr/><h2><a name="Sample_code:"/>Sample code:</h2><p>Examples operate on the class at the bottom (TestEntity). There are more samples in the guide. </p><ul><li>Getting a value from an object field </li><pre class="prettyprint">TestEntity thing = new TestEntity();
+Object value = ReflectUtils.getInstance().getFieldValue(thing, &quot;entityId&quot;);
+// value will be &quot;33&quot;</pre></ul><ul><li>Setting a value on an object field </li><pre class="prettyprint">TestEntity thing = new TestEntity();
+ReflectUtils.getInstance().setFieldValue(thing, &quot;entityId&quot;, 33);
+// value of thing.getEntityId() will be &quot;33&quot;, value is autoconverted into the right type</pre></ul><ul><li>Setting a nested value on an object field </li><pre class="prettyprint">Object thing = new HashMap(); // using a hashmap for simplicity here, could easily be nested POJOs
+ReflectUtils.getInstance().setFieldValue(thing, &quot;person.contactInfo.name&quot;, &quot;aaronz&quot;);
+// the value of the name field which is on the object in the contactInfo field which is on the object in the person field on the thing object is set to &quot;aaronz&quot;</pre></ul><ul><li>Constructing classes </li><pre class="prettyprint">List l = ReflectUtils.getInstance().constructClass(List.class);
+Class&lt;?&gt; clazz = TestEntity.class;
+Object o = ReflectUtils.getInstance().constructClass(clazz);
+// o will be an instance of TestEntity</pre>
+</ul><p><strong>TestEntity.class</strong> (comes directly from the test cases) </p><pre class="prettyprint">public class TestEntity {
+   private Long id = new Long(3);
+   private String entityId = &quot;33&quot;;
+   \@TestAnnote
+   private String extra = null;
+   private Boolean bool = null;
+   private String[] sArray = {&quot;1&quot;,&quot;2&quot;};
+
+   public String getPrefix() {
+      return &quot;crud&quot;;
+   }
+   public String createEntity(Object entity) {
+      return &quot;1&quot;;
+   }
+   \@TestAnnote
+   public String getEntityId() {
+      return entityId;
+   }
+   public void setEntityId(String entityId) {
+      this.entityId = entityId;
+   }
+   public Long getId() {
+      return id;
+   }
+   public void setId(Long id) {
+      this.id = id;
+   }
+   \@TestAnnoteField1
+   public String getExtra() {
+      return extra;
+   }
+   \@TestAnnoteField2(&quot;TEST&quot;)
+   public void setExtra(String extra) {
+      this.extra = extra;
+   }
+   public String[] getSArray() {
+      return sArray;
+   }
+   public void setSArray(String[] array) {
+      sArray = array;
+   }
+   public Boolean getBool() {
+      return bool;
+   }
+   public void setBool(Boolean bool) {
+      this.bool = bool;
+   }
+}</pre>
+ </div>
+    <div>
+        You are encouraged to look at the test cases (available in the source code) which illustrate uses of the utilities
+        far better than the documentation.
+    </div>
+</body>
+</html>

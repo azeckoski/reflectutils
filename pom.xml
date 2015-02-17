@@ -1,0 +1,228 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.azeckoski</groupId>
+    <artifactId>reflectutils</artifactId>
+    <packaging>jar</packaging>
+    <version>0.9.20-SNAPSHOT</version>
+    <name>Reflection Utilities</name>
+    <url>http://code.google.com/p/reflectutils/</url>
+    <inceptionYear>2006</inceptionYear>
+    <description> A set of reflection utilities and miscellaneous utilities related to
+        working with classes and their fields with no dependencies which is compatible
+        with java 1.5 and generics. The package was originally created by Aaron Zeckoski
+        for the Sakai Project and Generic DAO project but was repackaged to make it
+        distributable by request. It is used in the RSF framework
+        (http://www2.caret.cam.ac.uk/rsfwiki/) and the EntityBroker among other things.
+        Note about the BeanUtils provided dependency: BeanUtils is not required if you are
+        not using it in your project. Note about the Hibernate provided dependency:
+        Hibernate is not required if you are not using it in your project. </description>
+    <properties>
+        <beanutils.version>1.8.0</beanutils.version>
+    </properties>
+    <licenses>
+        <license>
+            <name>Apache License 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <comments>For source code</comments>
+        </license>
+        <license>
+            <name>Creative Commons Attribution 3.0</name>
+            <url>http://creativecommons.org/licenses/by-sa/3.0/</url>
+            <comments>For documentation and other materials</comments>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>aaronz@vt.edu</id>
+            <name>Aaron Zeckoski</name>
+            <email>azeckoski@vt.edu</email>
+            <url>http://tinyurl.com/azprofile</url>
+            <organization>Zeckoski</organization>
+            <organizationUrl> http://zeckoski.org/ </organizationUrl>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <repository>
+            <id>sakai-maven2-scp</id>
+            <name>Sakaiproject Maven 2 repository</name>
+            <!-- <url>dav:https://source.sakaiproject.org/maven2</url> -->
+            <url>scpexe://source.sakaiproject.org/var/www/html/maven2</url>
+        </repository>
+        <site>
+            <id>local</id>
+            <name>Local Test</name>
+            <url>file:///tmp/reflectutils/site</url>
+        </site>
+    </distributionManagement>
+
+    <!-- define source code repository location -->
+    <scm>
+        <connection>scm:svn:http://reflectutils.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://reflectutils.googlecode.com/svn/trunk</developerConnection>
+        <url>http://code.google.com/p/reflectutils/source/browse/trunk</url>
+    </scm>
+    <dependencies>
+        <!--
+            optional BeanUtils dependency - only needed at runtime if you are using apache
+            bean utils along with this
+        -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${beanutils.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+	  <!-- include the readme.txt file and the java source files -->
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>*.txt</include>
+                    <include>src/main/**/*.java</include>
+                    <include>src/main/**/*.html</include>
+                    <include>src/main/**/*.xml</include>
+                    <include>src/main/**/*.properties</include>
+                    <include>src/test/**/*.java</include>
+                </includes>
+            </resource>
+        </resources>
+
+	<!-- unit testing -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/Test*.java</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+	    <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>2.4.1</version>
+	    </plugin>
+        </plugins>
+
+    </build>
+
+  <!-- define javadocs and jxr docs -->
+    <reporting>
+        <plugins>
+	  <!-- Java 1.5 source compliance required -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+	      <!-- javadocs -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <overview>${basedir}/src/main/java/overview.html</overview>
+                    <debug>true</debug>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                        <link>http://commons.apache.org/beanutils/apidocs/</link>
+                    </links>
+                    <breakiterator>true</breakiterator>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
+            <plugin>
+	      <!-- junit test reports -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+	      <!-- unit test coverage reporting -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>
+            <plugin>
+	      <!-- Code analysis report -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>1.5</targetJdk>
+                    <rulesets>
+                        <ruleset>/rulesets/basic.xml</ruleset>
+                        <ruleset>/rulesets/codesize.xml</ruleset>
+                        <ruleset>/rulesets/design.xml</ruleset>
+                        <ruleset>/rulesets/finalizers.xml</ruleset>
+                        <ruleset>/rulesets/imports.xml</ruleset>
+                        <ruleset>/rulesets/logging-java.xml</ruleset>
+                        <ruleset>/rulesets/migrating.xml</ruleset>
+                        <ruleset>/rulesets/strings.xml</ruleset>
+                        <!--
+                            <ruleset>/rulesets/typeresolution.xml</ruleset> Causes a
+                            screen buffer and thus a failure when building on servers -AZ
+                        -->
+                        <ruleset>/rulesets/unusedcode.xml</ruleset>
+                    </rulesets>
+                    <format>xml</format>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                </configuration>
+            </plugin>
+            <plugin>
+	      <!-- Changelog report -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>changelog-maven-plugin</artifactId>
+                <configuration>
+                    <type>range</type>
+                    <range>90</range><!-- days -->
+                </configuration>
+            </plugin>
+            <plugin>
+	      <!-- TODO tags report -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <configuration>
+                    <tags>
+                        <tag>TODO</tag>
+                        <tag>FIXME</tag>
+                        <tag>@deprecated</tag>
+                    </tags>
+                </configuration>
+            </plugin>
+            <plugin>
+	      <!-- jdepend code analysis -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+	      <!-- jxr source code cross linking -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                    <javadocDir>apidocs</javadocDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

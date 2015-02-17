@@ -1,0 +1,35 @@
+<html>
+<body>
+<p>A set of reflection utilities and miscellaneous utilities related
+to working with classes and their fields with no dependencies which is
+compatible with java 1.5 and generics.</p>
+<h2><a name="Features:" />Features:</h2>
+<p>These are built to be compatible with <a
+	href="http://commons.apache.org/beanutils/" rel="nofollow">Apache
+Commons BeanUtils</a> and the nesting structure works the same, refer to the
+apache BeanUtils project docs for details. Support for Apache DynaClass
+/ DynaBean is included. Current users of beanutils should be able to
+drop in these utilities and gain the functionality with minimal code
+changes.</p>
+<p>Handles field operations for properties (getters and setters),
+partial properties (only getter or only setter), and fields. This is
+configurable to use the fields only, properties only, or the hybrid
+approach (default). This improves upon the BeanUtils limitation of
+handling only properties or the Google utilities limitation of handling
+only fields.</p>
+<p>Getting and setting fields supports simple, nested, indexed, and
+mapped values
+<ul>
+	<li><strong>Simple:</strong> Get/set a field in a bean (or map),
+	Example: &quot;title&quot;, &quot;id&quot;</li>
+	<li><strong>Nested:</strong> Get/set a field in a bean which is
+	contained in another bean, Example: &quot;someBean.title&quot;,
+	&quot;someBean.id&quot;</li>
+	<li><strong>Indexed:</strong> Get/set a list/array item by index
+	in a bean, Example: &quot;myList1&quot;, &quot;anArray2&quot;</li>
+	<li><strong>Mapped:</strong> Get/set a map entry by key in a bean,
+	Example: &quot;myMap(key)&quot;, &quot;someMap(thing)&quot;</li>
+</ul>
+</p>
+</body>
+</html>
