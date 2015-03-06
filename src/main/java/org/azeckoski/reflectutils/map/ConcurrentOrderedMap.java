@@ -173,13 +173,7 @@ public class ConcurrentOrderedMap<K, V> extends ConcurrentHashMap<K, V> implemen
     transient Set<K> keySet;
     transient Set<Map.Entry<K,V>> entrySet;
     transient Collection<V> values;
-
-    @Override
-    public Set<K> keySet() {
-        Set<K> ks = keySet;
-        return (ks != null) ? ks : (keySet = new KeySet());
-    }
-
+    
     @Override
     public Collection<V> values() {
         Collection<V> vs = values;
