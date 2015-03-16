@@ -121,6 +121,13 @@ public class ArrayOrderedMap<K, V> extends HashMap<K, V> implements OrderedMap<K
     }
 
     @Override
+	public void putAll(Map<? extends K, ? extends V> m) {
+    	for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+			put(entry.getKey(), entry.getValue());
+		}
+	}
+    
+    @Override
     public V remove(Object key) {
         V v = super.remove(key);
         if (v != null) {

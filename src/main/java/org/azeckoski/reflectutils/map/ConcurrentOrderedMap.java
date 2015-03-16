@@ -116,6 +116,11 @@ public class ConcurrentOrderedMap<K, V> extends ConcurrentHashMap<K, V> implemen
     }
 
     @Override
+	public boolean containsKey(Object key) {
+    	return super.get(key) != null;
+	}
+
+	@Override
     public V put(K key, V value) {
         value = fixNullIn(value);
         V v = super.put(key, value);
@@ -128,6 +133,13 @@ public class ConcurrentOrderedMap<K, V> extends ConcurrentHashMap<K, V> implemen
     }
 
     @Override
+	public void putAll(Map<? extends K, ? extends V> m) {
+    	for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+			put(entry.getKey(), entry.getValue());
+		}
+	}
+
+	@Override
     public V putIfAbsent(K key, V value) {
         if (! containsKey(key)) 
             return put(key, value);
