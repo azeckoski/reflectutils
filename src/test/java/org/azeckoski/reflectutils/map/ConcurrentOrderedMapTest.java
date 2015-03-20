@@ -251,7 +251,7 @@ public class ConcurrentOrderedMapTest extends ArrayOrderedMapTest {
 
 
     public void testKeySet() {
-        Set<String> keys = m1.keySet();
+        Set<String> keys = m1.legacyKeySet();
         assertEquals(3, keys.size());
         Iterator<String> it = keys.iterator();
         assertTrue( it.hasNext() );
