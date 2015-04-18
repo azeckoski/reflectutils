@@ -3,7 +3,7 @@
     <groupId>org.azeckoski</groupId>
     <artifactId>reflectutils</artifactId>
     <packaging>jar</packaging>
-    <version>0.9.20-SNAPSHOT</version>
+    <version>0.9.20</version>
     <name>Reflection Utilities</name>
     <url>http://code.google.com/p/reflectutils/</url>
     <inceptionYear>2006</inceptionYear>
@@ -69,7 +69,8 @@
       <url>https://github.com/azeckoski/reflectutils</url>
       <connection>scm:git:git@github.com:azeckoski/reflectutils.git</connection>
       <developerConnection>scm:git:git@github.com:azeckoski/reflectutils.git</developerConnection>
-    </scm>
+      <tag>reflectutils-0.9.20</tag>
+  </scm>
     <dependencies>
         <!--
             optional BeanUtils dependency - only needed at runtime if you are using apache
