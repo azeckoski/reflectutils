@@ -66,9 +66,9 @@
 
     <!-- define source code repository location -->
     <scm>
-        <connection>scm:svn:http://reflectutils.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://reflectutils.googlecode.com/svn/trunk</developerConnection>
-        <url>http://code.google.com/p/reflectutils/source/browse/trunk</url>
+      <url>https://github.com/azeckoski/reflectutils</url>
+      <connection>scm:git:git@github.com:azeckoski/reflectutils.git</connection>
+      <developerConnection>scm:git:git@github.com:azeckoski/reflectutils.git</developerConnection>
     </scm>
     <dependencies>
         <!--
